@@ -1,4 +1,5 @@
 //using D3 to get json file
+
 d3.json("static/samples.json").then((importedData) => {
     // console.log(importedData);
     var data = importedData;
@@ -70,14 +71,51 @@ d3.json("static/samples.json").then((importedData) => {
       Plotly.newPlot('bubble', data, layout);
 
       var list = d3.select("#sample-metadata");
-      list.append("ul");
-      data.metadata[0].entries(item).forEach(function([Key,value]) {
-        var new_val = list.append("li");
-        new_val.text(`${key}:${value}`);
-
-
-        
-      });
+      
       
 
 });  
+
+function demographics(otuname) {
+
+  var demographic_info = d3.select(`#sample-metadata`)
+  d3.json("static/samples.json").then((importedData) => {
+  for (var i = 0; i < importedData.metadata.length; i++) {
+    if (importedData.metadata[i].id == otuname) {
+    demographic_info.html("");
+      // Use `Object.entries` to add each key and value pair to the panel
+      // Hint: Inside the loop, you will need to use d3 to append new
+      // tags for each key-value in the metadata.
+        Object.entries(importedData.metadata[i]).forEach(function([key,value]){
+          var row = demographic_info.append("p");
+          row.text(`${key}:${value}`)
+        })
+    }; 
+  };
+  });
+};
+
+function init() {
+  //getting default input 
+  var input_value = d3.select("#selDataset");
+
+  d3.json("static/samples.json").then((importedData) => {
+    importedData.names.forEach((otu) => {
+     input_value
+     .append("option")
+     .text(otu)
+     .property("value", otu);
+     
+    });
+  });
+
+};
+function optionChanged(otuname) {
+  // Fetch new data each time a new sample is selected
+  //buildCharts(otuname);
+  console.log(otuname);
+  demographics(otuname);
+}
+// var otuname = 940
+//demographics(otuname);
+init()
