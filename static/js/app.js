@@ -48,7 +48,7 @@ d3.json("static/samples.json").then((importedData) => {
           var layout = {
             title: "Top OTU Present in Belly Button",
           };
-          d3.select("bar") = "";
+          //d3.select("bar") = "";
           // Render the plot to the div tag with id "plot"
           Plotly.newPlot("bar", chartData, layout);
 
@@ -71,7 +71,7 @@ d3.json("static/samples.json").then((importedData) => {
             // width: 600
           };
           
-          d3.select("bubble") = "";
+          //d3.select("bubble") = "";
           Plotly.newPlot('bubble', data, layout);
 
           var list = d3.select("#sample-metadata");
